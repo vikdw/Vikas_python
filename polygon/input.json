@@ -1,0 +1,16 @@
+{
+    "input1" : {
+        "TC": "get_edge_length",
+        "side" : 3,
+        "radius": 20, 
+        "Pass": 400
+    },
+    "input2" : {
+        "TC": "get_edge_length",
+        "side" : 4,
+        "radius": 20, 
+        "Pass": 400
+    }
+
+
+}

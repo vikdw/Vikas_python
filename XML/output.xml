@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<book category="web" cover="paperback">
+     <title lang="en">Learning XML 2</title>
+     <author>Erik Ray</author>
+     <year>2006</year>
+     <price>49.95</price>
+     </book>
