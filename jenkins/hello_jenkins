@@ -1,6 +1,8 @@
+
+def commit_msg = ""
+ 
 pipeline {
     agent any
-def commit_msg = ""
 
     stages {
         stage('Hello') {
