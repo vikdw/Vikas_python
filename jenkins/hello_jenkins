@@ -9,8 +9,7 @@ environment {
             steps {
                 echo 'Hello World'
                 echo "${GIT_COMMIT}"
-                def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                env.commit_msg = ${commitMessage}
+                env.commit_msg = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
             }
         }
     stage('Print ENV Values') {
