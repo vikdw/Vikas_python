@@ -10,8 +10,8 @@ environment {
                 echo 'Hello World'
                 echo "${GIT_COMMIT}"
                 echo "${env.commit_msg}"
-                script{
                 def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                script{
                 env.commit_msg = "${commitMessage}"
                       }
             }
