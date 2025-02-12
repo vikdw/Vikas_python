@@ -22,7 +22,7 @@ environment {
     stage('Print ENV Values') {
             steps {
                 echo "${commit_msg}"
-                echo "${commit_envmsg}"
+                echo "${env.commit_envmsg}"
             }
         }
 
