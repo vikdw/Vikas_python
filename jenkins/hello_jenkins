@@ -10,7 +10,9 @@ environment {
                 echo 'Hello World'
                 echo "${GIT_COMMIT}"
                 echo "${env.commit_msg}"
+                script{
                 env.commit_msg = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                      }
             }
         }
     stage('Print ENV Values') {
