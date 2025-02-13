@@ -18,20 +18,16 @@ environment {
                 commit_msg = "${commitMessage}"
                 commit_envmsg = ${commit_msg}
                 }
-                echo "${commit_msg}"
-                echo "next is commit env mssge"
-                echo "${commit_envmsg}"
                       
             }
         }
     stage('Print ENV Values') {
             when {
                  changelog 'build'
-                 // expression { "${env.commit_envmsg}" =~ /build/ }
                  }
             steps {
-                //echo "${commitMessage}"
-                echo "${env.commit_envmsg}"
+                echo "${commit_msg}"
+                echo "${commit_envmsg}"
             }
         }
 
