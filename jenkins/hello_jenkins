@@ -39,7 +39,6 @@ environment {
                 echo "${commit_envmsg}"
             }
         }
-    stages {
         stage('start down stream job') {
             steps {
                 echo "${commit_envmsg} env from groovy."
@@ -52,6 +51,5 @@ environment {
                       }
             }
         }
-    }
     }
 }
