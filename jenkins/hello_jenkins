@@ -22,7 +22,7 @@ environment {
     stage('Print ENV Values') {
             when {
                  changelog 'build'
-                 # expression { "${env.commit_envmsg}" =~ /build/ }
+                 // expression { "${env.commit_envmsg}" =~ /build/ }
                  }
             steps {
                 echo "${commit_msg}"
