@@ -3,9 +3,10 @@ def commit_msg = ""
  
 pipeline {
     agent any
+/*
 environment {
   commit_envmsg = ""
-}
+}*/
     stages {
         stage('Hello') {
             steps {
@@ -19,8 +20,8 @@ environment {
                 echo "${commit_msg}"
                 echo "next is commit env mssge"
                 echo "${commit_envmsg}"
-                commit_envmsg="${commit_msg}"
-                echo "${commit_envmsg}"
+                env.commit_envmsg="${commit_msg}"
+                echo "${env.commit_envmsg}"
                       }
             }
         }
@@ -31,7 +32,7 @@ environment {
                  }
             steps {
                 //echo "${commitMessage}"
-                echo "${commit_envmsg}"
+                echo "${env.commit_envmsg}"
             }
         }
 
