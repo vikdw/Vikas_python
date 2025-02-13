@@ -18,6 +18,7 @@ environment {
                 commit_msg = "${commitMessage}"
                       }
                 echo "${commit_msg}"
+                echo "next is commit env mssge"
                 echo "${commit_envmsg}"
                 script{
                 commit_envmsg="${commit_msg}"
