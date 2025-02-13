@@ -29,9 +29,9 @@ environment {
         }
 
     stage('get ENV Values') {
-            when {
+           /* when {
                  changelog 'build'
-                 }
+                 }*/
             steps {
                 echo "${commit_msg}"
                 echo "${commit_envmsg}"
