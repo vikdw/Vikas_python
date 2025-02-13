@@ -18,8 +18,10 @@ environment {
                 commit_msg = "${commitMessage}"
                 echo "${commit_msg}"
                 echo "${env.commit_envmsg}"
+                script{
                 commit_envmsg="${commit_msg}"
                 echo "${env.commit_envmsg}"
+                      }
                       }
             }
         }
