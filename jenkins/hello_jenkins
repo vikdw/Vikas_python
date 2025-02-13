@@ -30,7 +30,8 @@ environment {
 
     stage('get ENV Values') {
             when {
-                 changelog 'build'
+                 //changelog 'build'
+                 expression { commit_envmsg ==~ /^.*build.*/ }
                  }
             steps {
                 echo "${commit_msg}"
