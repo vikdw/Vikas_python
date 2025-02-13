@@ -21,7 +21,8 @@ environment {
         }
     stage('Print ENV Values') {
             when {
-                  expression { "${env.commit_envmsg}" =~ /build/ }
+                 changelog 'build'
+                 # expression { "${env.commit_envmsg}" =~ /build/ }
                  }
             steps {
                 echo "${commit_msg}"
