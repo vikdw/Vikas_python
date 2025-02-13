@@ -34,10 +34,24 @@ environment {
                  expression { commit_envmsg ==~ /^.*build.*/ }
                  }
             steps {
+                echo "build found in commit message, getting commit msg."
                 echo "${commit_msg}"
                 echo "${commit_envmsg}"
             }
         }
-
+    stages {
+        stage('start down stream job') {
+            steps {
+                echo "${commit_envmsg} env from groovy."
+                script{
+                build(
+                propagate: false, job: 'job2',
+                parameters:
+                  [string(value: "${commit_envmsg}", description: 'upstream job', name: 'commit_envmsg')]
+                     )
+                      }
+            }
+        }
+    }
     }
 }
