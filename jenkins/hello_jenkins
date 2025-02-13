@@ -14,9 +14,7 @@ environment {
                 echo "${env.commit_msg}"
                 script{
                 def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
-                      }
                 echo "${commitMessage}"
-                script{
                 commit_msg = "${commitMessage}"
                       }
                 echo "${commit_msg}"
