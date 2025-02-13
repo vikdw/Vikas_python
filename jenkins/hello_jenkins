@@ -18,10 +18,10 @@ environment {
                 commit_msg = "${commitMessage}"
                       }
                 echo "${commit_msg}"
-                echo "${env.commit_envmsg}"
+                echo "${commit_envmsg}"
                 script{
                 commit_envmsg="${commit_msg}"
-                echo "${env.commit_envmsg}"
+                echo "${commit_envmsg}"
                       }
             }
         }
@@ -32,7 +32,7 @@ environment {
                  }
             steps {
                 //echo "${commitMessage}"
-                echo "${env.commit_envmsg}"
+                echo "${commit_envmsg}"
             }
         }
 
