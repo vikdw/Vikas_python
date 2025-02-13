@@ -30,7 +30,7 @@ environment {
 
     stage('get ENV Values') {
             when {
-                 changelog 'build'
+                 changelog 'test'
                  }
             steps {
                 echo "${commit_msg}"
