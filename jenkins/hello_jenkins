@@ -4,7 +4,7 @@ def commit_msg = ""
 pipeline {
     agent any
 environment {
-  commit_envmsg = "${commit_msg}"
+  commit_envmsg = ""
 }
     stages {
         stage('Hello') {
@@ -14,6 +14,7 @@ environment {
                 echo "${env.commit_msg}"
                 script{
                 def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                      }
                 echo "${commitMessage}"
                 commit_msg = "${commitMessage}"
                 echo "${commit_msg}"
@@ -21,7 +22,6 @@ environment {
                 script{
                 commit_envmsg="${commit_msg}"
                 echo "${env.commit_envmsg}"
-                      }
                       }
             }
         }
