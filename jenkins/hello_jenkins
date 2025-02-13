@@ -21,7 +21,8 @@ environment {
                 echo "next is commit env mssge"
                 echo "${commit_envmsg}"
                 script{
-                commit_envmsg="${commit_msg}"
+                echo "${commit_msg}"
+                commit_envmsg = ${commit_msg}
                 echo "${commit_envmsg}"
                        }
                       
