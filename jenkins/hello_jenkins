@@ -16,15 +16,22 @@ environment {
                 def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                 echo "${commitMessage}"
                 commit_msg = "${commitMessage}"
-                commit_envmsg = ${commit_msg}
                 }
                       
             }
         }
-    stage('Print ENV Values') {
-            when {
+   stage('set ENV Values') {
+            steps {
+               script{
+                     commit_envmsg = "${commit_msg}"
+                       }
+            }
+        }
+
+    stage('get ENV Values') {
+           /* when {
                  changelog 'build'
-                 }
+                 }*/
             steps {
                 echo "${commit_msg}"
                 echo "${commit_envmsg}"
