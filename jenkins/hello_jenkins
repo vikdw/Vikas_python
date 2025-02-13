@@ -3,26 +3,28 @@ def commit_msg = ""
  
 pipeline {
     agent any
-/*
+
 environment {
-  commit_envmsg = ""
-}*/
+  commit_envmsg = "1st env value"
+}
     stages {
         stage('Hello') {
             steps {
                 echo 'Hello World'
                 echo "${GIT_COMMIT}"
-                echo "${env.commit_msg}"
                 script{
                 def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                 echo "${commitMessage}"
                 commit_msg = "${commitMessage}"
+                }
                 echo "${commit_msg}"
                 echo "next is commit env mssge"
                 echo "${commit_envmsg}"
-                env.commit_envmsg="${commit_msg}"
-                echo "${env.commit_envmsg}"
-                      }
+                script{
+                commit_envmsg="${commit_msg}"
+                echo "${commit_envmsg}"
+                       }
+                      
             }
         }
     stage('Print ENV Values') {
