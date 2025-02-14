@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage("creating txt file in /tmp") {
             steps {
-                sh "python3 test_python.py"
+                sh 'python3 --version'
+                sh 'python3 test_python.py'
             }
         }
     }
