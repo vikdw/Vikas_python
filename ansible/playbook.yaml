@@ -1,0 +1,8 @@
+
+- name: Network Getting Started First Playbook
+  gather_facts: true
+  hosts: master
+  tasks:
+    - name: This command will change the working directory to somedir/
+      ansible.builtin.shell:
+          cmd: ls -l /root > /root/test.txt 
