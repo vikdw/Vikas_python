@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/vikdw/Vikas_python'
+            }
+        }
+        stage('run playbook') {
+            steps {
+                ansiblePlaybook become: true, credentialsId: 'ansible', installation: 'Ansible', inventory: 'ansible/inventory', playbook: 'ansible/playbook.yaml', vaultTmpPath: ''
+            }
+        }
+    }
+}
+
