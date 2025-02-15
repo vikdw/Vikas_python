@@ -7,5 +7,11 @@ pipeline {
                 sh 'python3 jenkins/test_python.py'
             }
         }
+        stage("upload file to artifactory") {
+            steps {
+                sh " curl -uadmin:AP2sdYv8tbUnvwCo3dcjPTMQ3qg -T /tmp/test_python.txt 'http://localhost:8081/artifactory/artifactory-local/${BUILD_ID}/test_python.txt'"
+                 
+            }
+        }
     }
 }
