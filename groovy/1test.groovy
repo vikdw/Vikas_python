@@ -22,3 +22,8 @@ def sum(a,b){
     println c
 }
 sum(2,3)
+
+
+def s1 = "test1"
+def s2 = "test2"
+println "$s1_$s2"

@@ -1,4 +1,4 @@
-from lxml import etree
+from lxml import etree as et
 import numpy as np
 
 
@@ -23,17 +23,56 @@ s2='''
   <f:length>120</f:length>
 </f:table>
 </root> '''
+
+et.register_namespace("h","http://www.w3.org/TR/html4/")
+# et.register_namespace('f',"https://www.w3schools.com/furniture")
 ns= {'h':"http://www.w3.org/TR/html4/",'f':"https://www.w3schools.com/furniture"}
-root=etree.fromstring(s2)
-etree.register_namespace('h',"http://www.w3.org/TR/html4/")
-etree.register_namespace('f',"https://www.w3schools.com/furniture")
-# print(etree.dump(root))
-# for x in root:
-#     print(x.tag)
-l = root.findall('.//{https://www.w3schools.com/furniture}table')
-for x in l:
-    for y in x:
-        print(y.text)
+r = et.fromstring(s2)
+print(r[0][0])
+sr= r.find('.//{http://www.w3.org/TR/html4/}td')
+print(sr)
+sr= r.findall('.//{*}td')
+print(sr)
+sr= r.findall(".//h:td", ns)
+print(sr[0].text, sr[1].text)
+# sr= r.findall(".//*:td[contains(text()='Apples')]", ns)
+print(et.dump(r))
+
+sx= r.xpath('.//h:table', namespace={'h':"http://www.w3.org/TR/html4/",'f':"https://www.w3schools.com/furniture"})
+
+
+
+# r = et.fromstring(s)
+# print(r.tag)
+# et.SubElement(r,'subject')
+# sb=r.xpath('.//subject')
+# print(sb)
+# sb[0].set('xml_Math',"XML_with_Math")
+# sb[0].text="Maths"
+# print(et.tostring(r, pretty_print=True).decode('UTF-8'))
+
+# t=r.xpath(".//*[text()='Maths']")
+# print(t)
+
+
+sb1= r.findall('subject')
+print(sb1)
+
+
+
+
+
+# ns= {'h':"http://www.w3.org/TR/html4/",'f':"https://www.w3schools.com/furniture"}
+# root=etree.fromstring(s2)
+# etree.register_namespace('h',"http://www.w3.org/TR/html4/")
+# etree.register_namespace('f',"https://www.w3schools.com/furniture")
+# # print(etree.dump(root))
+# # for x in root:
+# #     print(x.tag)
+# l = root.findall('.//{https://www.w3schools.com/furniture}table')
+# for x in l:
+#     for y in x:
+#         print(y.text)
 
 
 
@@ -93,4 +132,18 @@ for x in l:
           
 
 
+# root = et.Element('xml', version="x.x")
 
+# # Pass the parent node, name of the child node,
+# # and any number of optional attributes
+# et.SubElement(root, 'head')
+# et.SubElement(root, 'title', bgcolor="red", fontsize='22')
+# et.SubElement(root, 'body', fontsize="15")
+
+# print (et.tostring(root, pretty_print=True).decode("utf-8"))
+# for x in root:
+#     if x.tag == "head":
+#         x.set('headCount', '1')
+#         et.SubElement(x ,'body', eyes='black')
+
+# print (et.tostring(root, pretty_print=True).decode("utf-8"))
