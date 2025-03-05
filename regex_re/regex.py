@@ -29,6 +29,8 @@ print(m)
 for x in m:
     print(x.group(2))
 
+print(pattern.search(string)) #return 1st serch element only.
+print(pattern.search(string).group())
 
 m = pattern.findall(string)
 print(m)
@@ -42,3 +44,20 @@ p1=pattern.sub(repl,string)
 print(p1)
 
 # p2= pattern.
+
+
+
+
+
+
+name = 'Python is 1 2 3 345'
+
+# r='[0-9]'
+# pattern= re.compile(r)
+# s = pattern.findall(name)
+# print(s)
+
+digitCount = re.sub("[^0-9]", "", name)
+letterCount = re.sub("[^a-zA-Z]", "", name)
+print(digitCount)
+print(letterCount)
