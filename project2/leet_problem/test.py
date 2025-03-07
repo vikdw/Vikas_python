@@ -387,6 +387,50 @@
 # print(next(res))
 
 
-days = ['S','M','T','W','Tr','F','St'] 
-i = ''.join(days)
-print(i)
+# days = ['S','M','T','W','Tr','F','St'] 
+# i = ''.join(days)
+# print(i)
+
+
+# s ='Hello World'
+# v ='aeiou'
+# c = 0
+# l = [x for x in s if x in v]
+# print(len(l))
+
+# dict1 = {'a': 1, 'b': 2}
+# dict2 = {'b': 3, 'c': 4}
+
+# m = {**dict1, **dict2}
+# print(m)
+
+# list1 = [1, 2, 3, 4]
+# list2 = [3, 4, 5, 6]
+
+# l = list(set(list1) | set(list2))
+# print(l)
+
+s = 'nxtwave'
+d={}
+
+for c in s:
+    d[c]=d.get(c,0)+1
+for c in s:
+    if d[c]==1:
+        print(c)
+
+#[1, 2, 3, 4, 5, 6]]
+# l = [1, [2, [3, 4], 5], 6]
+# n = []
+
+# def test(l :list) ->list:
+#     for x in l:
+#         if isinstance(x, int):
+#             n.append(x)
+#         else:
+#             test(x)
+#     return n
+# print(test(l))
+
+
+print(int(14**0.5))
