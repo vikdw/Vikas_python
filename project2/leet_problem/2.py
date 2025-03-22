@@ -26,3 +26,4 @@ for x in s:
 #     sum = max(sum, r-l+1)
 
 print(c, sum, old_c)
+
