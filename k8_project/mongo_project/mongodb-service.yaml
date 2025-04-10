@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service     # service name for mongo db
+  namespace: mongo-project
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017           # use port 27017 to send traffic.
+      targetPort: 27017     # send traffic to mongodb pods on 27017 port. 

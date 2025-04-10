@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mongo-project
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: mongodb-secret
+    namespace: mongo-project
+type: Opaque
+data:
+    mongo-root-username: dXNlcm5hbWU=     ## use "echo dXNlcm5hbWU= | base64 --decode" to decode, use  "echo -n 'username' | base64" to encode
+    mongo-root-password: cGFzc3dvcmQ=
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: mongo-project
+  labels:
+    app: mongodb   # deployment label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb   # deployment loog for this lable name in pods
+  template:
+    metadata:
+      labels:
+        app: mongodb  # label for pod, this lable referece shoule be same as in matchLabels in deployment
+        facing: backend
+        version: v1
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017   # mongo DB listens on 27017 port for requests
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME    #Env variable name "MONGO_INITDB_ROOT_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username         #should come from secret name "mongodb-secret", key in secret is "mongo-root-username"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service     # service name for mongo db
+  namespace: mongo-project
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017           # use port 27017 to send traffic.
+      targetPort: 27017     # send traffic to mongodb pods on 27017 port. 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-configmap   # name of the configmap, will use this in front end pod mongoexpress to connect to mongodb service to route traffic to mongodb. 
+  namespace: mongo-project
+data:
+  database_url: mongodb-service  # name of service listening to mongo db pod
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+  namespace: mongo-project
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+        facing: frontend
+        version: v1
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+        - containerPort: 8081                        #mongo-express listen on port 8081 for traffic from service.
+        env:                                         # this env variable are properties of image, neex username, password and url to connect to mongodb
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret                   # Username coming from secred we defined before, secret name match with name.
+              key: mongo-root-username               # key in the secret, configure same username for the mongodb and use same to login.
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+        - name: ME_CONFIG_MONGODB_SERVER            # mongo0expredd pod connect to mongo db pod service, we five url/path in this. this is property of mongo-express image file. 
+          valueFrom: 
+            configMapKeyRef:
+              name: mongodb-configmap               # config map name
+              key: database_url                     # key in the config map.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express-service
+  namespace: mongo-project
+spec:
+  selector:
+    app: mongo-express    # select pods with label mongo-express
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 8081          # port on the service
+      targetPort: 8081    # pod port
+      nodePort: 30000      # service is exposed to 30000 port for external traffic
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-ingress
+  namespace: mongo-project
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: test-vikas-mongo-project.com
+      http:
+        paths:
+        - path: /
+          pathType: Exact
+          backend:
+            service:
+              name: mongo-express-service
+              port: 
+                number: 30000

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+  namespace: mongo-project
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+        facing: frontend
+        version: v1
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+        - containerPort: 8081                        #mongo-express listen on port 8081 for traffic from service.
+        env:                                         # this env variable are properties of image, neex username, password and url to connect to mongodb
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          value: username
+          # valueFrom:
+          #  configMapKeyRef:
+          #    name: mongodb-configmap                   # Username coming from secred we defined before, secret name match with name.
+          #    key: mongo-root-username               # key in the secret, configure same username for the mongodb and use same to login.
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          value: password
+          # valueFrom: 
+          #  configMapKeyRef:
+          #    name: mongodb-configmap
+          #    key: mongo-root-password
+        - name: ME_CONFIG_MONGODB_SERVER            # mongo0expredd pod connect to mongo db pod service, we five url/path in this. this is property of mongo-express image file. 
+          value: mongodb-service 
+          # valueFrom: 
+          #  configMapKeyRef:
+          #    name: mongodb-configmap               # config map name
+          #    key: database_url                     # key in the config map.
+

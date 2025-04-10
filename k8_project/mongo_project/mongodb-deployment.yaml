@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: mongo-project
+  labels:
+    app: mongodb   # deployment label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb   # deployment loog for this lable name in pods
+  template:
+    metadata:
+      labels:
+        app: mongodb  # label for pod, this lable referece shoule be same as in matchLabels in deployment
+        facing: backend
+        version: v1
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017   # mongo DB listens on 27017 port for requests
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME    #Env variable name "MONGO_INITDB_ROOT_USERNAME"
+          value: username 
+          # valueFrom:
+          #  configMapKeyRef:
+          #    name: mongodb-configmap
+          #    key: mongo-root-username         #should come from secret name "mongodb-secret", key in secret is "mongo-root-username"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: password
+            # valueFrom: 
+            # configMapKeyRef:
+            #  name: mongodb-configmap
+            #  key: mongo-root-password
