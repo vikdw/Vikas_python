@@ -1,0 +1,23 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+
+# .terraform directory where modules and providers are cached
+.terraform/
+
+# CLI configuration files
+.terraform.rc
+terraform.rc
+
+# Override files that may contain sensitive data
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Backup files from text editors
+*.bak
+*.swp
