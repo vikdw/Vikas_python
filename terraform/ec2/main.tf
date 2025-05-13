@@ -28,3 +28,7 @@ output "instance_public_ip" {
   value = aws_instance.my_test_ec2.public_ip
 #  value = [for i in aws_instance.my_test_ec2 : i.public_ip]
 }
+output "instance_id" {
+ value       = aws_instance.public_instance.id
+ description = "Instance ID"
+}
