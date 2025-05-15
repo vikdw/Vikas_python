@@ -1,0 +1,4 @@
+    - name: Handler job after copy
+      shell:
+        cmd: date >> /root/test.txt
+

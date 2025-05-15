@@ -1,0 +1,6 @@
+
+- name: Network Getting Started First Playbook
+  gather_facts: true
+  hosts: master
+  roles:
+    - test 

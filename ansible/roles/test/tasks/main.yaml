@@ -1,0 +1,40 @@
+    - name: run sleep command
+      shell:
+          cmd: sleep 2
+      async: 3
+      poll: 0
+      register: sleep_job
+
+    - name: This command will change the working directory to somedir/
+      ansible.builtin.shell:
+        cmd: date >> /root/test.txt;ip a >> /root/test.txt
+
+
+    - name: async job to check
+      async_status:
+        jid: "{{  sleep_job.ansible_job_id  }}"
+      register: job_result
+      until: job_result.finished
+      retries: 3
+      delay: 1
+    - name: print vars local
+      debug:
+        msg: "{{  my_var  }}"
+
+    - name: print vars host
+      debug:
+        msg: "{{  host_var  }}"
+    - name: print vars group
+      debug:
+        msg: "{{  group_port  }}"
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy file
+      copy:
+        src: nginx.conf
+        dest: /root/nginx.conf
+      notify: Handler job after copy  # Notify the handler if file changes
+
